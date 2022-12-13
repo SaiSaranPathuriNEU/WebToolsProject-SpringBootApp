@@ -105,7 +105,7 @@ public class UserController {
 	public String logoutUser(HttpServletRequest request) throws IllegalStateException{
 		HttpSession session = request.getSession(false);
 		session.removeAttribute("curUser");
-		return "redirect:/items";
+		return "redirect:/login";
 		
 	}
 }
