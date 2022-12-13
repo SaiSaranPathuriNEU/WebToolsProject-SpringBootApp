@@ -62,7 +62,7 @@ public class UserController {
 		
 		try {
 			User u = userDao.registerUser(regUser);
-			if(regUser!=null) {
+			if(u != null) {
 				return "login";
 			}
 		} catch (Exception e) {
@@ -75,18 +75,22 @@ public class UserController {
 	
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public String loginUser(userDAO userDAO, HttpServletRequest request) throws IllegalStateException{
-		String userEmail = request.getParameter("userEmail");
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String type = request.getParameter("type");
+		String role = request.getParameter("role");
 		
 		try {
-			User user = userDao.loginUser(userEmail, password, type);
+			User user = userDao.loginUser(email, password, role);
 			if(user != null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("curUser", user);
+				session.setAttribute("currentUser", user);
 				//return "user-view";
 				System.out.println("Inside login");
-				return "redirect:/items";
+				
+				if(user.getRole() == "Admin")
+				return "redirect:/adminDashboard";
+				else
+					return "redirect:/userDashboard";
 			}else {
 				System.out.println("not logged");
 				request.setAttribute("getAlert", "yes");

@@ -7,12 +7,14 @@ import com.finalproject.pojo.User;
 
 @Component
 public class userDAO extends DAO {
+	
 	public User getUser(long id) {
-		return (User) getSession().get("com.finalproject.pojo.User",id);
+		return (User)getSession().get("com.finalproject.pojo.User",id);
 	}
 	
 	public User registerUser(User user) throws Exception{
 		try {
+			
 			System.out.println("inside userDAO  "+ user.getEmail()+"  "+ user.getRole() + user.getPassword());
 			begin();
 			getSession().save(user);

@@ -63,9 +63,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                           <div class="form-outline flex-fill mb-0">
                             <input
                               type="text"
-                              id="firstName"
+                              id="firstname"
                               class="form-control"
-                              name="firstName"
+                              name="firstname"
                               required="required"
                             />
                             <label class="form-label" for="form3Example1c"
@@ -79,9 +79,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                           <div class="form-outline flex-fill mb-0">
                             <input
                               type="text"
-                              id="lastName"
+                              id="lastname"
                               class="form-control"
-                              name="lastName"
+                              name="lastname"
                               required
                             />
                             <label class="form-label" for="form3Example1c"

@@ -12,9 +12,7 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-        <property name="hibernate.show_sql">true</property>
-        <mapping class="com.mycom.pojo.User"/>
-        <mapping class="com.mycom.pojo.Task"/>
+       
        	<!-- <mapping class="com.mycom.pojo.UserTasks"/> -->
     </session-factory>
 </hibernate-configuration>

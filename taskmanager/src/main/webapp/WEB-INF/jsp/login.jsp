@@ -29,6 +29,7 @@ height: 100%;
 </style>
 </head>
 <body>
+  <form></form>
 <section class="vh-100">
   <div class="container-fluid">
     <div class="row">
@@ -46,18 +47,18 @@ height: 100%;
             <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log in</h3>
 
             <div class="form-outline mb-4">
-              <input type="email" id="email"  name="email" class="form-control form-control-lg" />
+              <input type="email" id="email"  name="email" class="form-control form-control-lg" required />
               <label class="form-label" for="form2Example18" name="email" > Email</label>
             </div>
 
             <div class="form-outline mb-4">
-              <input type="password" id="password" name="password" class="form-control form-control-lg" />
+              <input type="password" id="password" name="password" class="form-control form-control-lg" required />
               <label class="form-label" for="form2Example28" name="password" > Password </label>
             </div>
 
             <div class="form-outline mb-4">
               <div class="form-group">
-                <select class="loginlb1 form-control term" name="role" id="role">
+                <select class="loginlb1 form-control term" name="role" id="role" required>
                   <option>User</option>
                   <option>Admin</option>
                 </select>
@@ -67,10 +68,11 @@ height: 100%;
             <div class="pt-1 mb-4">
               <button class="btn btn-info btn-lg btn-block" type="submit">Login</button>
             </div>
-
             <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
-            <p>Don't have an account? <a href="#!" class="link-info">Register here</a></p>
-
+            <c:if test="${user == null}">
+              <p>Don't have an account? <a href="register" >Register here</a></p>
+            </c:if>
+            </form>
           </form>
 
         </div>
