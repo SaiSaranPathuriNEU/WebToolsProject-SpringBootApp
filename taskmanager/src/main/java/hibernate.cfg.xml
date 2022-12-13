@@ -15,6 +15,6 @@
         <property name="hibernate.show_sql">true</property>
         <mapping class="com.mycom.pojo.User"/>
         <mapping class="com.mycom.pojo.Task"/>
-       	<mapping class="com.mycom.pojo.Booking"/>
+       	<!-- <mapping class="com.mycom.pojo.UserTasks"/> -->
     </session-factory>
 </hibernate-configuration>

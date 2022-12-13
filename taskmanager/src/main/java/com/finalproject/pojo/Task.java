@@ -9,10 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * @author Ramesh Fadatare
- *
- */
 
 @Entity
 @Table(name = "task")
@@ -20,7 +16,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name ="task_id")
+    @Column(name ="id")
     private long id;
     
     @Column(name ="userName")
