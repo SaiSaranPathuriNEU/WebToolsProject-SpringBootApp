@@ -58,7 +58,7 @@ height: 100%;
 
             <div class="form-outline mb-4">
               <div class="form-group">
-                <select class="loginlb1 form-control term" name="role" id="role" required>
+                <select class="loginlb1 form-control term" name="role" id="role" required>         
                   <option>User</option>
                   <option>Admin</option>
                 </select>

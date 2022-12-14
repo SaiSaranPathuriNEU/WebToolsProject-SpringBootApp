@@ -129,20 +129,13 @@ public class UserController {
 		return null;
 	}
 	
-	
-//	@RequestMapping(value="/adminDashboard", method = RequestMethod.GET)
-//	public String showAdminDashboard(userDAO userdao, taskDAO taskdao, HttpServletRequest request,HttpSession session)
-//	{
-//		User
-//		session.setAttribute("user", currentUser);
-//		return "adminDashboard";
-//	}
+
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logoutUser(HttpServletRequest request) throws IllegalStateException{
+	public String logout(HttpServletRequest request) throws IllegalStateException{
 		HttpSession session = request.getSession(false);
-		session.removeAttribute("curUser");
-		return "redirect:/login";
+		session.removeAttribute("currentUser");
+		return "login";
 		
 	}
 }

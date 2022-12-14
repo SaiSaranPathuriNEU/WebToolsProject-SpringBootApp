@@ -60,7 +60,7 @@ h4 {
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-link px-3 me-2">
+        <button type="button" class="btn btn-link px-3 me-2" >
           Logout
         </button>
         
@@ -95,12 +95,13 @@ h4 {
       <form>
       <div class="tab-content">
           <div class="tab-pane fade show active " id="home">
+            
+            <h3 class="mt-2 align-items-center">Welcome to Admin Admin Home Page!</h4>
             <c:if test="${user != null}">
-              <h4 class="mt-2 align-items-center">Welcome <c:out
-                value="${user.getEmail()}" /></h4>
-              <p>Welcome to the Admin Page of the Task Manger Application!</p>
+              <h5 class="mt-2 align-items-center">You are loggedin as  <c:out
+                value="${user.getEmail()}" /></h5>
+              
             </c:if>
-            <h4 class="mt-2 align-items-center">Welcome Admin</h4>
           </div>
           
           <div class="tab-pane fade" id="tasks">
@@ -122,16 +123,16 @@ h4 {
                       <tbody>
                         <c:forEach var="task" items="${requestScope.tasks}">
                         <tr>                        
-                          <th scope="row"><c:out value="${task.getId()}"/>1</th>
+                          <th scope="row"><c:out value="${task.getId()}"/></th>
                           <td><c:out value="${task.getDescription()}"/></td>
                           <td><c:out value="${task.getCreatedBy()}"/></td>
                           <td><c:out value="${task.getTargetDate()}"/></td>
                           <td><c:out value="${task.getAssignedTo()}"/></td>
                           <td><c:out value="${task.getStatus()}"/></td>
                           <td>
-                            <button type="button" class="btn btn-success"><i class="far fa-eye"></i>View</button>
-                            <button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Update</button>
-                            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i>Delete</button>
+                            <a type="button" class="btn btn-success"><i class="far fa-eye"></i>View Tsk</a>
+                            <a type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                            <a type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i>Delete</a>
                           </td>
                         </tr>
                       </c:forEach>
@@ -142,9 +143,16 @@ h4 {
               </div>
           </div>
           <div class="tab-pane fade show active " id="createTasks">
-            <h4 class="mt-2 align-items-center">Create Tasks </h4>
-            <p>Create a Task here!</p>
-        </div>
+            
+             <h4 class="mt-2 align-items-center"> </h4>
+          <div class="card-title">
+             <div class="card-body align-items-center">
+          <h4 class="align-items-center">Create Task</h4>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="/task" class="btn btn-primary align-center">Create</a>
+          </div>
+          </div>
+          </div>
         <div class="tab-pane fade" id="User">
           <h4 class="mt-2">All Users:</h4>
           <div class="container">
@@ -169,9 +177,9 @@ h4 {
                       <td><c:out value="${arguser.getEmail()}"/></td>
                       <td><c:out value="${arguser.getRole()}"/></td>                  
                       <td>
-                        <button type="button" class="btn btn-success"><i class="far fa-eye"></i>View</button>
-                        <button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Update</button>
-                      <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i>Delete</button>
+                        <a type="button" class="btn btn-success"><i class="far fa-eye"></i>View User</a>
+                        <a type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                      <a type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i>Delete</a>
                       </td>
                     </tr>
                   </c:forEach>

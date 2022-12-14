@@ -82,5 +82,24 @@ public class userDAO extends DAO {
 		}
 		return null;
    }
+   
+   
+   public List<String> getAllUsersEmails() {
+	   String role = "Admin";
+	   
+	   try {
+		   begin();
+		   Query query = getSession().createQuery("email from User where role != :role");
+		   query.setParameter("role", role);
+		   List userEmails = query.list();
+		   
+		  return userEmails;
+	   }
+	   catch (HibernateException e) {
+			// TODO: handle exception
+                   rollback();
+		}
+		return null;
+   }
 }
 
