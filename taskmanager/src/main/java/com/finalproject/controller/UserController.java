@@ -2,16 +2,22 @@ package com.finalproject.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.stereotype.Controller;
 
+import com.finalproject.dao.taskDAO;
 import com.finalproject.dao.userDAO;
+import com.finalproject.pojo.Task;
 import com.finalproject.pojo.User;
 import com.finalproject.validator.userValidation;
 
@@ -24,6 +30,9 @@ public class UserController {
 	
 	@Autowired
 	userDAO userDao;
+	
+	@Autowired
+	taskDAO taskDao;
 	
 	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -88,11 +97,28 @@ public class UserController {
 				System.out.println(user.getRole().toString());
 				if(user.getRole().toString().equals("Admin"))
 				{
+					
 					System.out.println("Inside admin");
+					
+					List<Task> adminTasks = taskDao.getAdminTasks(user);
+					List<User> allUsers = userDao.getAllUsers();
+					//List<Task> assignedTask = user
+					request.setAttribute("tasks", adminTasks);
+					request.setAttribute("role", user.getRole());
+					request.setAttribute("allUsers", allUsers);
+					
 				return "adminDashboard";
 				}
-				else
+				else {
+                    System.out.println("Inside user");
+					
+					List<Task> userTasks = taskDao.getUserTasks(user);
+					
+					request.setAttribute("tasks", userTasks);
+					request.setAttribute("role", user.getRole());
+					
 					return "userDashboard";
+				}
 			}else {
 				System.out.println("not logged");
 				request.setAttribute("getAlert", "yes");
@@ -102,6 +128,15 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	
+//	@RequestMapping(value="/adminDashboard", method = RequestMethod.GET)
+//	public String showAdminDashboard(userDAO userdao, taskDAO taskdao, HttpServletRequest request,HttpSession session)
+//	{
+//		User
+//		session.setAttribute("user", currentUser);
+//		return "adminDashboard";
+//	}
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutUser(HttpServletRequest request) throws IllegalStateException{

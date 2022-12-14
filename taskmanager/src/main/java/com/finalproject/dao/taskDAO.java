@@ -1,26 +1,29 @@
 package com.finalproject.dao;
 
+import java.util.List;
+import java.util.Set;
+
 import org.hibernate.HibernateException;
 import org.springframework.stereotype.Component;
 import org.hibernate.query.Query;
+
+import com.finalproject.pojo.Task;
 import com.finalproject.pojo.User;
 
 @Component
 public class taskDAO extends DAO {
 	
-	public User getUser(long id) {
-		return (User)getSession().get("com.finalproject.pojo.User",id);
-	}
-	
-	public User registerUser(User user) throws Exception{
+	public List<Task> getAdminTasks(User user) throws Exception{
+		String email=user.getEmail();
 		try {
 			
-			System.out.println("inside userDAO  "+ user.getEmail()+"  "+ user.getRole() + user.getPassword());
+			System.out.println("inside getAdminTasks the admin is:  "+ email);
 			begin();
-			getSession().save(user);
+			Query query = getSession().createQuery("from Task where createdBy = :email");
+			query.setParameter("email", email);
+			List tasks = query.list();
 			commit();
-			close();
-			return user;
+			return tasks;
 		} catch (HibernateException e) {
 			// TODO: handle exception
                         rollback();
@@ -29,33 +32,15 @@ public class taskDAO extends DAO {
 //		return u;
 	}
 	
-	public User loginUser(String email, String password, String role) throws Exception {
+	public List<Task> getUserTasks(User user) {
+		String email=user.getEmail();
 		try {
 			begin();
-			
-			Query query = getSession().createQuery("from User where email = :email and password = :password and role = :role");
-			query.setString("email", email);
-			query.setString("password", password);
-			query.setString("role", role);
-			User user = (User) query.uniqueResult();
-                        close();
-			return user;
-		} catch (HibernateException e) {
-			// TODO: handle exception
-			rollback();
-		}
-		return null;
-	}
-	
-	public User getUserEmail(String email) {
-		try {
-			begin();
-			Query query = getSession().createQuery("from User where email = :email");
-			query.setString("email", email);
-				
-			User user = (User) query.uniqueResult();
+			Query query = getSession().createQuery("from Task where assignedTo = :email");
+			query.setParameter("email", email);
+			List tasks = query.list();
 			commit();
-			return user;
+			return tasks;
 			
 		} catch (HibernateException e) {
 			// TODO: handle exception
@@ -64,18 +49,85 @@ public class taskDAO extends DAO {
 		return null;
 	}
 	
-   public User getAllUsers() {
-	   String role = "Admin";
+	public List<Task> getAssignedTasks(User user) {
+		String email=user.getEmail();
+		String assignedto ="";
+		try {
+			begin();
+			Query query = getSession().createQuery("from Task where assignedTo != :assignedto or assignedTo != NULL and createdBy = :email ");
+			query.setParameter("email", email);
+			query.setParameter("assignedto", assignedto);
+			List tasks = query.list();
+			commit();
+			return tasks;
+			
+		} catch (HibernateException e) {
+			// TODO: handle exception
+                    rollback();
+		}
+		return null;
+	}
+	
+   public Task addTask(Task task) {
 	   try {
-		   begin();
-		   Query query = getSession().createQuery("from User where role != :role");
-		    
-	   }
-	   catch (HibernateException e) {
+			
+			System.out.println("inside addTask()  "+ task.getDescription()+"  "+ task.getCreatedBy() + task.getAssignedTo());
+			begin();
+			getSession().save(task);
+			commit();
+			close();
+			return task;
+		} catch (HibernateException e) {
+			// TODO: handle exception
+                       rollback();
+                       return null;
+		}
+   }
+   
+   public Task updateTask(Task task) {
+	   long taskID=task.getId();
+		try {
+			begin();
+			Query query = getSession().createQuery("from Task where id = :taskID");
+			query.setParameter("id", taskID);
+			Task resTask = (Task) query.uniqueResult();
+			
+			if(resTask != null) {
+				resTask.setAssignedTo(task.getAssignedTo()); 
+				resTask.setDescription(task.getDescription()); 
+				resTask.setTargetDate(task.getTargetDate());    
+				resTask.setCreatedBy(task.getCreatedBy()); 
+				resTask.setComments(task.getComments());
+				resTask.setStatus(task.getStatus()); 
+				
+				getSession().update(resTask);
+				commit();
+				close();
+			}
+			
+		} catch (HibernateException e) {
 			// TODO: handle exception
                    rollback();
 		}
 		return null;
    }
+   
+   public void removeTask(Task task) {
+	   
+		try {
+			begin();
+			
+			getSession().delete(task);
+			
+			commit();
+			close();
+		} catch (HibernateException e) {
+			// TODO: handle exception
+                       rollback();
+			e.printStackTrace();
+                       
+		}
+	}
+   
 }
 

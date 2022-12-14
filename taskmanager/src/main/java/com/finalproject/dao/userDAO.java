@@ -1,5 +1,7 @@
 package com.finalproject.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.springframework.stereotype.Component;
 import org.hibernate.query.Query;
@@ -26,7 +28,7 @@ public class userDAO extends DAO {
                         rollback();
                         return null;
 		}
-//		return u;
+
 	}
 	
 	public User loginUser(String email, String password, String role) throws Exception {
@@ -34,14 +36,13 @@ public class userDAO extends DAO {
 			begin();
 			
 			Query query = getSession().createQuery("from User where email = :email and password = :password and role = :role");
-			query.setString("email", email);
-			query.setString("password", password);
-			query.setString("role", role);
+			query.setParameter("email", email);
+			query.setParameter("password", password);
+			query.setParameter("role", role);
 			User user = (User) query.uniqueResult();
                         close();
 			return user;
 		} catch (HibernateException e) {
-			// TODO: handle exception
 			rollback();
 		}
 		return null;
@@ -51,7 +52,7 @@ public class userDAO extends DAO {
 		try {
 			begin();
 			Query query = getSession().createQuery("from User where email = :email");
-			query.setString("email", email);
+			query.setParameter("email", email);
 				
 			User user = (User) query.uniqueResult();
 			commit();
@@ -64,12 +65,16 @@ public class userDAO extends DAO {
 		return null;
 	}
 	
-   public User getAllUsers() {
+   public List<User> getAllUsers() {
 	   String role = "Admin";
+	   
 	   try {
 		   begin();
 		   Query query = getSession().createQuery("from User where role != :role");
-		    
+		   query.setParameter("role", role);
+		   
+		  List users = query.list();
+		  return users;
 	   }
 	   catch (HibernateException e) {
 			// TODO: handle exception

@@ -68,10 +68,16 @@ height: 100%;
             <div class="pt-1 mb-4">
               <button class="btn btn-info btn-lg btn-block" type="submit">Login</button>
             </div>
-            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
+
             <c:if test="${user == null}">
               <p>Don't have an account? <a href="register" >Register here</a></p>
             </c:if>
+            <c:if test="${requestScope.getAlert == 'yes'}">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+
+              <strong>Login Failed!</strong>
+            </div>
+          </c:if>
             </form>
           </form>
 
