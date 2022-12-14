@@ -58,7 +58,6 @@ public class UserController {
 		if(result.hasErrors()) {
 			return "register";
 		}
-		boolean token = true;
 		
 		try {
 			User u = userDao.registerUser(regUser);
@@ -86,11 +85,14 @@ public class UserController {
 				session.setAttribute("currentUser", user);
 				//return "user-view";
 				System.out.println("Inside login");
-				
-				if(user.getRole() == "Admin")
-				return "redirect:/adminDashboard";
+				System.out.println(user.getRole().toString());
+				if(user.getRole().toString().equals("Admin"))
+				{
+					System.out.println("Inside admin");
+				return "adminDashboard";
+				}
 				else
-					return "redirect:/userDashboard";
+					return "userDashboard";
 			}else {
 				System.out.println("not logged");
 				request.setAttribute("getAlert", "yes");

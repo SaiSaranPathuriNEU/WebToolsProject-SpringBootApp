@@ -16,24 +16,6 @@ public class User {
 	@Column(name="id", unique = true, nullable = false)
 	private long id;
 	
-	@Column(name="email", unique = true)
-	private String email;
-	
-	@Column(name="password")
-	private String password;
-	
-	@Column(name="firstname")
-	private String firstname;
-	
-	@Column(name="lastname")
-	private String lastname;
-	
-	@Column(name="role")
-	private String role;
-	
-	public User() {
-	}
-
 	public long getId() {
 		return id;
 	}
@@ -81,5 +63,24 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	@Column(name="email", unique = true)
+	private String email;
+	
+	@Column(name="password")
+	private String password;
+	
+	@Column(name="firstname")
+	private String firstname;
+	
+	@Column(name="lastname")
+	private String lastname;
+	
+	@Column(name="role")
+	private String role;
+	
+	public User() {
+	}
+
 	
 }
