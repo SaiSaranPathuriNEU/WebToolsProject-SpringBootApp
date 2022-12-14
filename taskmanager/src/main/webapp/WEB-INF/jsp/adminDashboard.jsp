@@ -18,8 +18,19 @@
       });
   });
   </script>
+  <style>
+    .container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+  </style>
   </head>
   <body>
+    <c:set var="user" scope="session" value="${sessionScope.currentUser}" />
     <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <!-- Container wrapper -->
@@ -66,35 +77,128 @@
               <a href="#home" class="nav-link active">Home</a>
           </li>
           <li class="nav-item">
-              <a href="#profile" class="nav-link">Tasks</a>
+              <a href="#tasks" class="nav-link">Tasks</a>
           </li>
           <li class="nav-item">
-              <a href="#messages" class="nav-link">Create Tasks</a>
+              <a href="#createTasks" class="nav-link">Create Tasks</a>
           </li>
           <li class="nav-item">
-            <a href="#messages" class="nav-link">View Users</a>
+            <a href="#User" class="nav-link">View Users</a>
          </li>
          <li class="nav-item">
-          <a href="#messages" class="nav-link">Logout</a>
+          <a href="#logout" class="nav-link">Logout</a>
        </li>
         
             
         </li>
       </ul>
+      <form>
       <div class="tab-content">
-          <div class="tab-pane fade show active" id="home">
-              <h4 class="mt-2">Home tab content</h4>
-              <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+          <div class="tab-pane fade show active " id="home">
+            <c:if test="${user != null}">
+              <h4 class="mt-2 align-items-center">Welcome <c:out
+                value="${user.getEmail()}" /></h4>
+              <p>Welcome to the Admin Page of the Task Manger Application!</p>
+            </c:if>
+            <h4 class="mt-2 align-items-center">Welcome Admin</h4>
           </div>
-          <div class="tab-pane fade" id="profile">
-              <h4 class="mt-2">Profile tab content</h4>
-              <p>Vestibulum nec erat eu nulla rhoncus fringilla ut non neque. Vivamus nibh urna, ornare id gravida ut, mollis a magna. Aliquam porttitor condimentum nisi, eu viverra ipsum porta ut. Nam hendrerit bibendum turpis, sed molestie mi fermentum id. Aenean volutpat velit sem. Sed consequat ante in rutrum convallis. Nunc facilisis leo at faucibus adipiscing.</p>
+          
+          <div class="tab-pane fade" id="tasks">
+              <h4 class="mt-2">All Tasks:</h4>
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <table id="table1" class="table table-striped table-bordered" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Task Description</th>
+                          <th scope="col">Created By</th>
+                          <th scope="col">Deadline</th>
+                          <th scope="col">Assigned To</th>
+                          <th scope="col">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <c:forEach var="task" items="${requestScope.tasks}">
+                        <tr>                        
+                          <th scope="row"><c:out value="${task.getId()}"/>1</th>
+                          <td><c:out value="${task.getDescription()}"/></td>
+                          <td><c:out value="${task.getCreatedBy()}"/></td>
+                          <td><c:out value="${task.getTargetDate()}"/></td>
+                          <td><c:out value="${task.getAssignedTo()}"/></td>
+                          <td><c:out value="${task.getStatus()}"/></td>
+                          <td>
+                            <button type="button" class="btn btn-success"><i class="far fa-eye"></i>View</button>
+                            <button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Update</button>
+                            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i>Delete</button>
+                          </td>
+                        </tr>
+                      </c:forEach>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
           </div>
-          <div class="tab-pane fade" id="messages">
+          <div class="tab-pane fade show active " id="createTasks">
+            <h4 class="mt-2 align-items-center">Create Tasks </h4>
+            <p>Create a Task here!</p>
+        </div>
+        <div class="tab-pane fade" id="User">
+          <h4 class="mt-2">All Users:</h4>
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <table id="table2" class="table table-striped table-bordered" style="width:100%">
+                  <thead>
+                    <tr>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Role</th>
+                  
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <c:forEach var="arguser" items="${requestScope.allUsers}">
+                    <tr>
+                      
+                      <th scope="row"><c:out value="${arguser.getFirstname()}"/></th>
+                      <td><c:out value="${arguser.getLastname()}"/></td>
+                      <td><c:out value="${arguser.getEmail()}"/></td>
+                      <td><c:out value="${arguser.getRole()}"/></td>                  
+                      <td>
+                        <button type="button" class="btn btn-success"><i class="far fa-eye"></i>View</button>
+                        <button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Update</button>
+                      <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i>Delete</button>
+                      </td>
+                    </tr>
+                  </c:forEach>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+      </div>
+          <div class="tab-pane fade" id="logout">
               <h4 class="mt-2">Messages tab content</h4>
               <p>Donec vel placerat quam, ut euismod risus. Sed a mi suscipit, elementum sem a, hendrerit velit. Donec at erat magna. Sed dignissim orci nec eleifend egestas. Donec eget mi consequat massa vestibulum laoreet. Mauris et ultrices nulla, malesuada volutpat ante. Fusce ut orci lorem. Donec molestie libero in tempus imperdiet. Cum sociis natoque penatibus et magnis.</p>
           </div>
       </div>
+    </form>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table1').DataTable();
+            $('#table2').DataTable();
+        });
+      </script>
   </body>
   </html>
