@@ -10,10 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.stereotype.Controller;
 
 import com.finalproject.dao.taskDAO;
@@ -130,18 +132,38 @@ public class UserController {
 		return null;
 	}
 	
-	@RequestMapping(value = "/deleteUser/", method = RequestMethod.GET)
-	   public String deleteUser(@RequestParam User user) {
+	@RequestMapping(value = "/deleteUser/{email}", method = RequestMethod.GET)
+	   public String deleteUser(@PathVariable("email") String email, HttpServletRequest request) {
 	       
-		  try { boolean userDeleted = userDao.deleteUser(user);
+		  System.out.println("Inside delete user");
+		  User user = userDao.getUserbyEmail(email);
+		  try { 
+			  
+			  List<Task> tasks = taskDao.getUserTasks(user);
+			  
+			  for(Task task : tasks) {
+				  taskDao.removeAssignedTofromTask(task.getId());
+			  }
+			  
+			  boolean userDeleted = userDao.deleteUser(user);
 	       // service.deleteTodo(id);
-		   if(userDeleted)
-	       return "userDashboard";
+			//return "user-view";
+			  HttpSession session = request.getSession();
+				User admin_user = (User) session.getAttribute("currentUser");
+
+				List<Task> adminTasks = taskDao.getAdminTasks(admin_user);
+				List<User> allUsers = userDao.getAllUsers();
+				//List<Task> assignedTask = user
+				request.setAttribute("tasks", adminTasks);
+				request.setAttribute("role", admin_user.getRole());
+				request.setAttribute("allUsers", allUsers);
+		  request.setAttribute("currTabId","User");
+		   return "adminDashboard";
 	} catch (Exception e) {
 		// TODO: handle exception
 	}
 		return null;
-	   }
+	}
 	
 
 	

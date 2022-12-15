@@ -69,9 +69,9 @@ height: 100%;
               <button class="btn btn-info btn-lg btn-block" type="submit">Login</button>
             </div>
 
-            <c:if test="${user == null}">
+           
               <p>Don't have an account? <a href="register" >Register here</a></p>
-            </c:if>
+          
             <c:if test="${requestScope.isError == 'yes'}">
             <div class="alert alert-warning alert-dismissible" role="alert">
 

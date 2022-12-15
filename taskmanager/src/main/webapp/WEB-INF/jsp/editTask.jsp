@@ -23,6 +23,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
   </head>
   <body>
+    <c:set var="task" value="${requestScope.task}"/>
     <form class="task-from" action="createTask" modelAttribute="task" method="POST">
     <section class="vh-100" style="background-color: #eee">
       <div class="container h-100">
@@ -45,6 +46,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             id="description"
                             class="form-control"
                             name="description"
+                            value = "${task.getDescription()}"
                             required
                           />
                           <label class="form-label" for="form3Example1c"
@@ -77,7 +79,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                           <div class="form-outline mb-4">
 
                             <div class="form-group">
-                                <select class="loginlb1 form-control term overflow-scroll" name="assignedTo" id="assignedTo" required>
+                                <select class="loginlb1 form-control term overflow-scroll" name="assignedTo" id="assignedTo"  value = "${task.getAssignedTo()}" required>
                                 <c:forEach var="userEmails" items="${requestScope.allUsersEmails}">
                                 <option class="overflow-scroll"><c:out value="${userEmails}"/></option>
                                 </c:forEach>
@@ -96,7 +98,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             class = "date"
                             id="targetDate"
                             name="targetDate"
-                            
+                            value = "${task.getTargetDate()}"
                           />
                           <label class="form-label" for="form3Example4c"
                             >Deadline</label
@@ -108,7 +110,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div class="form-outline flex-fill mb-0">
                          
-                                <select class="loginlb1 form-control term overflow-scroll" name="status" id="status" required>
+                                <select class="loginlb1 form-control term overflow-scroll" name="status" id="status" value = "${task.getStatus()}" required>
                                      
                                 <option class="overflow-scroll" value = "New Task" >New Task</option>
                                 <option class="overflow-scroll" value ="Working">Working</option>
@@ -124,7 +126,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div class="form-outline flex-fill mb-0">
-                          <textarea class="form-control" rows="5"id="comments" name="comments"></textarea>
+                          <textarea class="form-control" rows="5"id="comments" name="comments" value = "${task.getComments()}"></textarea>
                           <label class="form-label" for="form3Example4cd"id="comment"
                             >Comments</label
                           >
@@ -134,17 +136,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       <div
                         class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                       >
-                      <c:set var ="callingScreen" value="${requestScope.callingScreen}" />
-                      <c:if test="${callingScreen == 'Create'}">
-                        <button type="submit" class="btn btn-primary btn-lg" >
-                         Create Task                   
-                        </button>
-                      </c:if>
-                      <c:if test="${callingScreen == 'Edit'}">
+                      
                         <button type="submit" class="btn btn-primary btn-lg">
                          Edit Task                   
                         </button>
-                      </c:if>
+                   
                       </div>
                     </form>
                   </div>

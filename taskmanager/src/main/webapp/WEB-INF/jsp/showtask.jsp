@@ -30,11 +30,7 @@ h4 {
   </style>
   </head>
   <body>
-    <c:set var = "user" scope="session" value="${sessionScope.currentUser}"/>
-    <c:if test="${user == null}">
-      <c:redirect url = "/login"/>
-    </c:if>
-
+    <c:set var="user" scope="session" value="${sessionScope.currentUser}" />
     <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <!-- Container wrapper -->
@@ -64,7 +60,16 @@ h4 {
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <a type="button" class="btn  btn-primary px-3 me-3" href="/taskmanager/logout" >
+        <a type="button" class="btn px-3 me-2" href="/taskmanager/task" >
+          Create Tasks
+        </a>
+        <button type="button" class="btn  btn-primary me-3" href="/taskmanager/logout" >
+          View Tasks
+        </button>
+        <a type="button" class="btn  px-3 me-2" href="/taskmanager/logout" >
+          View Users
+        </a>
+        <a type="button" class="btn  px-3 me-2" href="/taskmanager/logout" >
           Logout
         </a>
         
@@ -75,46 +80,14 @@ h4 {
   <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
-  <div class="m-4 justify-content-end">
-      <ul class="nav nav-pills justify-content-center" id="myTab">
-          <li class="nav-item">
-              <a href="#home" class="nav-link active">Home</a>
-          </li>
-          <li class="nav-item">
-              <a href="#tasks" class="nav-link">Tasks</a>
-          </li>
-          <li class="nav-item">
-              <a href="#createTasks" class="nav-link">Create Tasks</a>
-          </li>
-          <li class="nav-item">
-            <a href="#User" class="nav-link">View Users</a>
-         </li>
-         <li class="nav-item">
-          <a href="#logout" class="nav-link">Logout</a>
-       </li>
-        
-            
-        </li>
-      </ul>
-      </div>
-      <form>
-      <div class="tab-content">
-          <div class="tab-pane fade show active " id="home">
-            
-            <h3 class="mt-2 align-items-center">Welcome to Admin Admin Home Page!</h4>
-            <c:if test="${user != null}">
-              <h5 class="mt-2 align-items-center">You are loggedin as  <c:out
-                value="${user.getEmail()}" /></h5>
-              
-            </c:if>
-          </div>
-          
-          <div class="tab-pane fade" id="tasks">
-              <h4 class="mt-2">All Tasks:</h4>
+  
+     <form> 
+          <div  id="tasks">
+              <h4 class="mt-2 text-center">All Tasks under you</h4>
               <div class="container">
                 <div class="row">
                   <div class="col-12">
-                    <table id="table1" class="table table-striped table-bordered" style="width:100%">
+                    <table id="table1" class="table table-striped table-bordered" style="width:90%">
                       <thead>
                         <tr>
                         
@@ -147,51 +120,7 @@ h4 {
                 </div>
               </div>
         </div>
-        <div class="tab-pane fade" id="createTasks">
-          <div class="card-title">
-             <div class="card-body align-items-center">
-          <h4 class="align-items-center">Create Task</h4>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="/taskmanager/task" type="button" class="btn btn-primary align-center">Create</a>
-          </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="User">
-          <h4 class="mt-2">All Users:</h4>
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <table id="table2" class="table table-striped table-bordered" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th >First Name</th>
-                      <th >Last Name</th>
-                      <th >Email</th>
-                      <th >Role</th>
-                      <th>  </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <c:forEach var="arguser" items="${requestScope.allUsers}">
-                    <tr>
-                      
-                      <td><c:out value="${arguser.getFirstname()}"/></td>
-                      <td><c:out value="${arguser.getLastname()}"/></td>
-                      <td><c:out value="${arguser.getEmail()}"/></td>
-                      <td><c:out value="${arguser.getRole()}"/></td>                  
-                      <td>
-                      <a type="button" class="btn btn-danger" href="/taskmanager/deleteUser/${arguser.getEmail()}">Delete User</a>
-                      </td>
-                    </tr>
-                  </c:forEach>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-      </div>
-          
-      </div>
+        
     </form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

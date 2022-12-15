@@ -32,7 +32,7 @@ public class userValidation implements Validator{
 		
 		try {
 			System.out.println("The Uname inside try is  : " +user.getEmail());
-			User u = userdao.getUserEmail(userEmail);
+			User u = userdao.getUserbyEmail(userEmail);
 			if (u != null){
 				errors.rejectValue("userEmail", "errors.email", "email address already exists");
 			}

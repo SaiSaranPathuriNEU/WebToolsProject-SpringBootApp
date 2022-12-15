@@ -32,6 +32,23 @@ public class taskDAO extends DAO {
 //		return u;
 	}
 	
+	public Task getTaskbyId(long id) {
+		
+		try {
+			begin();
+			Query query = getSession().createQuery("from Task where id = :id");
+			query.setParameter("id", id);
+			Task resTask = (Task) query.uniqueResult();
+			commit();
+			return resTask;
+			
+		} catch (HibernateException e) {
+			// TODO: handle exception
+                    rollback();
+		}
+		return null;
+	}
+	
 	public List<Task> getUserTasks(User user) {
 		String email=user.getEmail();
 		try {
@@ -68,6 +85,28 @@ public class taskDAO extends DAO {
 		return null;
 	}
 	
+	public void removeAssignedTofromTask(long id) {
+		try {
+			begin();
+			Query query = getSession().createQuery("from Task where id = :id");
+			query.setParameter("id", id);
+			Task resTask = (Task) query.uniqueResult();
+			
+			if(resTask != null) {
+				resTask.setAssignedTo("None");
+				
+				getSession().update(resTask);
+				commit();
+				close();
+			}
+			
+     
+		} catch (HibernateException e) {
+			// TODO: handle exception
+                    rollback();
+		}
+	}
+	
    public Task addTask(Task task) {
 	   try {
 			
@@ -88,7 +127,7 @@ public class taskDAO extends DAO {
 	   long taskID=task.getId();
 		try {
 			begin();
-			Query query = getSession().createQuery("from Task where id = :taskID");
+			Query query = getSession().createQuery("from Task where id = :id");
 			query.setParameter("id", taskID);
 			Task resTask = (Task) query.uniqueResult();
 			
@@ -112,12 +151,14 @@ public class taskDAO extends DAO {
 		return null;
    }
    
-   public void removeTask(Task task) {
+   public void deleteTask(long id) {
 	   
 		try {
 			begin();
-			
-			getSession().delete(task);
+			Query query = getSession().createQuery("from Task where id = :id");
+			query.setParameter("id", id);
+			Task resTask = (Task) query.uniqueResult();
+			getSession().delete(resTask);
 			
 			commit();
 			close();

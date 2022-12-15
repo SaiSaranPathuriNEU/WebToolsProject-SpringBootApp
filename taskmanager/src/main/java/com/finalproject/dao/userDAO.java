@@ -49,7 +49,7 @@ public class userDAO extends DAO {
 		return null;
 	}
 	
-	public User getUserEmail(String email) {
+	public User getUserbyEmail(String email) {
 		try {
 			begin();
 			Query query = getSession().createQuery("from User where email = :email");
@@ -89,6 +89,7 @@ public class userDAO extends DAO {
  	 try {
           //save user object in the database
       	begin();
+
       	getSession().delete(user);
       	commit();
       	 return true;

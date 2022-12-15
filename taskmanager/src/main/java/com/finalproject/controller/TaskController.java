@@ -16,8 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.dao.taskDAO;
 import com.finalproject.dao.userDAO;
@@ -63,8 +65,27 @@ public class TaskController {
         return "task";
     }
 	
+	@RequestMapping(value = "/editTask/{id}", method = RequestMethod.GET)
+    public String showTaskPageForEdit(@PathVariable("id") long id,ModelMap model,HttpServletRequest request) {
+		List<String> allUsersEmails = new ArrayList<String>();
+		allUsersEmails.add("None");
+		List<User> allUsers = userDao.getAllUsers();
+		
+		for(User user : allUsers) {
+			allUsersEmails.add(user.getEmail());
+		}
+		//List<Task> assignedTask = user
+		
+		request.setAttribute("allUsersEmails", allUsersEmails);
+		request.setAttribute("callingScreen", "Create");
+		request.setAttribute("task", taskDao.getTaskbyId(id));
+        return "editTask";
+    }
+	
+
+	
     @RequestMapping(value = "/createTask", method = RequestMethod.POST)
-	public String registerUser(@ModelAttribute("task") Task createdTask,
+	public String createTask(@ModelAttribute("task") Task createdTask,
 								BindingResult result,taskDAO taskDao, 
 								HttpServletRequest request,ModelMap model) 
 										throws IllegalStateException{
@@ -75,7 +96,19 @@ public class TaskController {
 			
 			Task task = taskDao.addTask(createdTask);
 			if(task != null) {
-				return "adminDashboard";
+				HttpSession session = request.getSession();
+ 				User user = (User) session.getAttribute("currentUser");
+ 				//return "user-view";
+ 				System.out.println("Inside delete task");
+
+ 					List<Task> adminTasks = taskDao.getAdminTasks(user);
+ 					List<User> allUsers = userDao.getAllUsers();
+ 					//List<Task> assignedTask = user
+ 					request.setAttribute("tasks", adminTasks);
+ 					request.setAttribute("role", user.getRole());
+ 					request.setAttribute("allUsers", allUsers);
+				//return "adminDashboard";
+ 				return "adminDashboard";
 			}
 		}
 		else {
@@ -86,8 +119,36 @@ public class TaskController {
 			// TODO: handle exception
 		}
 		return null;
+	
+    }
+    
+    
+	
+    @RequestMapping(value="/deleteTask/{id}", method = RequestMethod.GET)
+	public String deleteTask(@PathVariable("id") long id,HttpServletRequest request) {
+    	 try {
+    	
+ 				HttpSession session = request.getSession();
+ 				User user = (User) session.getAttribute("currentUser");
+ 				//return "user-view";
+ 				System.out.println("Inside delete task");
+	
+ 				taskDao.deleteTask(id);
+
+ 					List<Task> adminTasks = taskDao.getAdminTasks(user);
+ 					List<User> allUsers = userDao.getAllUsers();
+ 					//List<Task> assignedTask = user
+ 					request.setAttribute("tasks", adminTasks);
+ 					request.setAttribute("role", user.getRole());
+ 					request.setAttribute("allUsers", allUsers);
+ 					
+ 				return "adminDashboard";
+    		 
+	} catch (Exception e) {
+		// TODO: handle exception
 	}
-	
-	
-	
+    	 return null;
+	}
+    
+    
 }
