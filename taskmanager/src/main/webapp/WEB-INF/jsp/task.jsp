@@ -63,6 +63,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             class="form-control"
                             name="createdBy"
                             value="${sessionScope.currentUser.getEmail()}"
+                            readonly
                             required
                           />
                           <label class="form-label" for="form3Example1c"

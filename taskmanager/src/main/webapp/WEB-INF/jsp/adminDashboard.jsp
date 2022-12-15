@@ -32,7 +32,7 @@ h4 {
   <body>
     <c:set var = "user" scope="session" value="${sessionScope.currentUser}"/>
     <c:if test="${user == null}">
-      <c:redirect url = "/login"/>
+      <c:redirect url = "/logout"/>
     </c:if>
 
     <!-- Navbar -->

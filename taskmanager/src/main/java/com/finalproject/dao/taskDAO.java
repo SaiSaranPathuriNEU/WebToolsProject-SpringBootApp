@@ -23,6 +23,7 @@ public class taskDAO extends DAO {
 			query.setParameter("email", email);
 			List tasks = query.list();
 			commit();
+			close();
 			return tasks;
 		} catch (HibernateException e) {
 			// TODO: handle exception
@@ -40,6 +41,7 @@ public class taskDAO extends DAO {
 			query.setParameter("id", id);
 			Task resTask = (Task) query.uniqueResult();
 			commit();
+			close();
 			return resTask;
 			
 		} catch (HibernateException e) {
@@ -57,6 +59,7 @@ public class taskDAO extends DAO {
 			query.setParameter("email", email);
 			List tasks = query.list();
 			commit();
+			close();
 			return tasks;
 			
 		} catch (HibernateException e) {
@@ -76,6 +79,7 @@ public class taskDAO extends DAO {
 			query.setParameter("assignedto", assignedto);
 			List tasks = query.list();
 			commit();
+			close();
 			return tasks;
 			
 		} catch (HibernateException e) {

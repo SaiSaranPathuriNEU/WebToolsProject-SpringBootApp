@@ -76,12 +76,33 @@ public class TaskController {
 		}
 		//List<Task> assignedTask = user
 		
+		Task task = taskDao.getTaskbyId(id);
 		request.setAttribute("allUsersEmails", allUsersEmails);
 		request.setAttribute("callingScreen", "Create");
-		request.setAttribute("task", taskDao.getTaskbyId(id));
+		request.setAttribute("task", task);
         return "editTask";
     }
 	
+	
+	@RequestMapping(value = "/editTask", method = RequestMethod.POST)
+    public String editTask(@ModelAttribute("task") Task createdTask,
+	BindingResult result,taskDAO taskDao, 
+	HttpServletRequest request,ModelMap model) {
+		List<String> allUsersEmails = new ArrayList<String>();
+		allUsersEmails.add("None");
+		List<User> allUsers = userDao.getAllUsers();
+		
+		for(User user : allUsers) {
+			allUsersEmails.add(user.getEmail());
+		}
+		//List<Task> assignedTask = user
+		
+		Task task = taskDao.getTaskbyId(id);
+		request.setAttribute("allUsersEmails", allUsersEmails);
+		request.setAttribute("callingScreen", "Create");
+		request.setAttribute("task", task);
+        return "editTask";
+    }
 
 	
     @RequestMapping(value = "/createTask", method = RequestMethod.POST)

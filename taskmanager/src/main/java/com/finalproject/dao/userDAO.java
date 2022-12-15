@@ -57,6 +57,7 @@ public class userDAO extends DAO {
 				
 			User user = (User) query.uniqueResult();
 			commit();
+			close();
 			return user;
 			
 		} catch (HibernateException e) {
@@ -75,6 +76,7 @@ public class userDAO extends DAO {
 		   query.setParameter("role", role);
 		   
 		  List users = query.list();
+		  close();
 		  return users;
 	   }
 	   catch (HibernateException e) {
@@ -92,6 +94,7 @@ public class userDAO extends DAO {
 
       	getSession().delete(user);
       	commit();
+      	close();
       	 return true;
       	
       } catch (HibernateException e) {
@@ -109,6 +112,7 @@ public class userDAO extends DAO {
 		   Query query = getSession().createQuery("email from User where role != :role");
 		   query.setParameter("role", role);
 		   List userEmails = query.list();
+		   close();
 		   
 		  return userEmails;
 	   }
