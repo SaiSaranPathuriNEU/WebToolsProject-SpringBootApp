@@ -75,7 +75,7 @@ h4 {
   <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
-  <div class="m-4 justify-content-end">
+  <div class="m-4 justify-content-end width=100%">
       <ul class="nav nav-pills justify-content-center" id="myTab">
           <li class="nav-item">
               <a href="#home" class="nav-link active">Home</a>
@@ -101,7 +101,7 @@ h4 {
       <div class="tab-content">
           <div class="tab-pane fade show active " id="home">
             
-            <h3 class="mt-2 align-items-center">Welcome to Admin Admin Home Page!</h4>
+            <h3 class="mt-2 align-items-center">Welcome to Admin Home Page!</h4>
             <c:if test="${user != null}">
               <h5 class="mt-2 align-items-center">You are loggedin as  <c:out
                 value="${user.getEmail()}" /></h5>

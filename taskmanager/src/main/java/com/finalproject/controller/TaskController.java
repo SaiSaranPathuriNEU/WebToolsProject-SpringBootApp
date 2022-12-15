@@ -124,6 +124,69 @@ public class TaskController {
 		}
 		return "adminDashboard";
     }
+	
+	@RequestMapping(value = "/changeTaskStatus/{id}", method = RequestMethod.GET)
+    public String changeTaskStatus(@PathVariable("id") long id,HttpServletRequest request) 
+	{
+		System.out.println("Inside delete task");
+		try {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("currentUser");
+		
+        
+        
+        Task task=taskDao.getTaskbyId(id);
+        
+        if(task.getStatus().equals("New Task")) {
+          String arg_status = "Working";
+		Task editedTask = new Task(id,task.getCreatedBy(),task.getAssignedTo(),task.getDescription(),task.getTargetDate(),task.getComments(),arg_status);
+		taskDao.updateTask(editedTask);
+        }
+        else if(task.getStatus().equals("Working")) {
+        	String arg_status = "Completed";
+        	Task editedTask = new Task(id,task.getCreatedBy(),task.getAssignedTo(),task.getDescription(),task.getTargetDate(),task.getComments(),arg_status);
+    		taskDao.updateTask(editedTask);
+        }
+		
+		//List<Task> assignedTask = user 
+		//List<Task> assignedTask = user
+		List<Task> userTasks = taskDao.getUserTasks(user);
+		
+		request.setAttribute("tasks", userTasks);
+		request.setAttribute("role", user.getRole());
+        return "userDashboard";
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "userDashboard";
+    }
+
+	@RequestMapping(value = "/dropUserTask/{id}", method = RequestMethod.GET)
+    public String dropUserTask(@PathVariable("id") long id,HttpServletRequest request) 
+	{
+		System.out.println("Inside delete task");
+		try {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("currentUser");
+		Task task=taskDao.getTaskbyId(id);
+        
+		Task editedTask = new Task(id,task.getCreatedBy(),"None",task.getDescription(),task.getTargetDate(),task.getComments(),"New Task");
+		taskDao.updateTask(editedTask);
+
+       List<Task> userTasks = taskDao.getUserTasks(user);
+		
+		request.setAttribute("tasks", userTasks);
+		request.setAttribute("role", user.getRole());
+        return "userDashboard";
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "userDashboard";
+    }
 
 	
     @RequestMapping(value = "/createTask", method = RequestMethod.POST)
@@ -176,7 +239,7 @@ public class TaskController {
  				System.out.println("Inside delete task");
 	
  				taskDao.deleteTask(id);
-
+ 					if(user.getRole().equals("Admin")) {
  					List<Task> adminTasks = taskDao.getAdminTasks(user);
  					List<User> allUsers = userDao.getAllUsers();
  					//List<Task> assignedTask = user
@@ -185,6 +248,13 @@ public class TaskController {
  					request.setAttribute("allUsers", allUsers);
  					
  				return "adminDashboard";
+ 				}else {
+ 					 List<Task> userTasks = taskDao.getUserTasks(user);
+ 					
+ 					request.setAttribute("tasks", userTasks);
+ 					request.setAttribute("role", user.getRole());
+ 			        return "userDashboard";
+ 				}
     		 
 	} catch (Exception e) {
 		// TODO: handle exception

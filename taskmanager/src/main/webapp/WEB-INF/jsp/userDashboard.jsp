@@ -130,8 +130,18 @@ h4 {
                           <td><c:out value="${task.getStatus()}"/></td>
                           <td>
                             <!-- <a type="button" class="btn btn-success"><i class="far fa-eye"></i>View Tsk</a> -->
-                            <a type="button" class="btn btn-warning" href="/taskmanager/editTask/${task.getId()}"><i class="fas fa-edit"></i>Change Status</a>
-                            <a type="button" class="btn btn-danger" href="/taskmanager/deleteTask/${task.getId()}"><i class="far fa-trash-alt"></i>Drop Task</a>
+                            <c:if test="${task.getStatus() == 'New Task'}">
+                            <a type="button" class="btn btn-primary" href="/taskmanager/changeTaskStatus/${task.getId()}"><i class="fas fa-edit"></i>Claim</a>
+                            <a type="button" class="btn btn-warning" href="/taskmanager/dropUserTask/${task.getId()}"><i class="fas fa-edit"></i>Drop</a>
+                            </c:if>
+                            <c:if test="${task.getStatus() == 'Working'}">
+                            <a type="button" class="btn btn-success" href="/taskmanager/changeTaskStatus/${task.getId()}"><i class="fas fa-edit"></i>Completed</a>
+                            <a type="button" class="btn btn-warning" href="/taskmanager/dropUserTask/${tassssk.getId()}"><i class="fas fa-edit"></i>Drop</a>
+                            </c:if>
+                            <c:if test="${task.getStatus() == 'Completed'}">
+                            <a type="button" class="btn btn-danger" href="/taskmanager/deleteTask/${task.getId()}"><i class="fas fa-edit"></i>Remove</a>
+      
+                            </c:if>
                           </td>
                         </tr>
                       </c:forEach>
