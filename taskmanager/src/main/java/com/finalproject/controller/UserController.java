@@ -115,10 +115,7 @@ public class UserController {
 				else {
                     System.out.println("Inside user");
 					
-					List<Task> userTasks = taskDao.getUserTasks(user);
-					
-					request.setAttribute("tasks", userTasks);
-					request.setAttribute("role", user.getRole());
+					s
 					
 					return "userDashboard";
 				}
@@ -145,7 +142,7 @@ public class UserController {
 				  taskDao.removeAssignedTofromTask(task.getId());
 			  }
 			  
-			  boolean userDeleted = userDao.deleteUser(user);
+			  userDao.deleteUser(user);
 	       // service.deleteTodo(id);
 			//return "user-view";
 			  HttpSession session = request.getSession();
