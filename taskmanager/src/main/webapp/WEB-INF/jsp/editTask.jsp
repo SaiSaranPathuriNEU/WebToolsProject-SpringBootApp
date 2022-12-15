@@ -24,7 +24,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
   </head>
   <body>
     <c:set var="task" value="${requestScope.task}"/>
-    <form class="task-from" action="createTask" modelAttribute="task" method="POST">
+    <form class="task-from" action="posteditedTask/${task.getId()}" method="POST" >
     <section class="vh-100" style="background-color: #eee">
       <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -127,7 +127,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div class="form-outline flex-fill mb-0">
-                          <textarea class="form-control" rows="5"id="comments" name="comments" value = "${task.getComments()}"></textarea>
+                          <input class="form-control" rows="5"id="comments" name="comments" value = "${task.getComments()}"></input>
                           <label class="form-label" for="form3Example4cd"id="comment"
                             >Comments</label
                           >
@@ -138,9 +138,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                       >
                       
-                        <button type="submit" class="btn btn-primary btn-lg">
+                      <button type="submit" class="btn btn-warning">
                          Edit Task                   
-                        </button>
+                      </button>
                    
                       </div>
                     </form>

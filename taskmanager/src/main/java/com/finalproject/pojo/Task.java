@@ -26,7 +26,7 @@ public class Task {
     private String description;
 
     @Column(name ="targetDate")
-    private Date targetDate;
+    private String targetDate;
     
     @Column(name = "createdBy")
     private String createdBy;
@@ -41,8 +41,9 @@ public class Task {
         super();
     }
 
-    public Task(String admin, String assignedTo, String desc, Date targetDate,String comments, String status) {
+    public Task(long id,String admin, String assignedTo, String desc, String targetDate,String comments, String status) {
         super();
+        this.id = id;
         this.assignedTo = assignedTo;
         this.description = desc;
         this.targetDate = targetDate;   
@@ -76,11 +77,11 @@ public class Task {
 		this.description = description;
 	}
 
-	public Date getTargetDate() {
+	public String getTargetDate() {
 		return targetDate;
 	}
 
-	public void setTargetDate(Date targetDate) {
+	public void setTargetDate(String targetDate) {
 		this.targetDate = targetDate;
 	}
 

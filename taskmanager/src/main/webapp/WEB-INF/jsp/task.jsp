@@ -125,7 +125,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div class="form-outline flex-fill mb-0">
-                          <textarea class="form-control" rows="5"id="comments" name="comments"></textarea>
+                          <input class="form-control" rows="5"id="comments" name="comments"></input>
                           <label class="form-label" for="form3Example4cd"id="comment"
                             >Comments</label
                           >

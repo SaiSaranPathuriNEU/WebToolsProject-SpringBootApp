@@ -135,7 +135,7 @@ h4 {
                           <td><c:out value="${task.getAssignedTo()}"/></td>
                           <td><c:out value="${task.getStatus()}"/></td>
                           <td>
-                            <a type="button" class="btn btn-success"><i class="far fa-eye"></i>View Tsk</a>
+                            <!-- <a type="button" class="btn btn-success"><i class="far fa-eye"></i>View Tsk</a> -->
                             <a type="button" class="btn btn-warning" href="/taskmanager/editTask/${task.getId()}"><i class="fas fa-edit"></i>Edit</a>
                             <a type="button" class="btn btn-danger" href="/taskmanager/deleteTask/${task.getId()}"><i class="far fa-trash-alt"></i>Delete</a>
                           </td>

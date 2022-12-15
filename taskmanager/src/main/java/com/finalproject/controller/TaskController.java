@@ -84,24 +84,45 @@ public class TaskController {
     }
 	
 	
-	@RequestMapping(value = "/editTask", method = RequestMethod.POST)
-    public String editTask(@ModelAttribute("task") Task createdTask,
-	BindingResult result,taskDAO taskDao, 
-	HttpServletRequest request,ModelMap model) {
+	@RequestMapping(value = "editTask/posteditedTask/{id}", method = RequestMethod.POST)
+    public String editTask(@PathVariable("id") long id,HttpServletRequest request) 
+	{
+		System.out.println("Inside delete task");
+		try {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("currentUser");
+		String assignedTo = request.getParameter("assignedTo");
+        String description = request.getParameter("description");
+        String targetDate = request.getParameter("targetDate");   
+       String createdBy = request.getParameter("createdBy");
+        String comments = request.getParameter("comments");
+        String status = request.getParameter("status");
+		Task editedTask = new Task(id,createdBy,assignedTo,description,targetDate,comments,status);
+		taskDao.updateTask(editedTask);
+		
 		List<String> allUsersEmails = new ArrayList<String>();
 		allUsersEmails.add("None");
 		List<User> allUsers = userDao.getAllUsers();
 		
-		for(User user : allUsers) {
-			allUsersEmails.add(user.getEmail());
+		for(User arguser : allUsers) {
+			allUsersEmails.add(arguser.getEmail());
 		}
 		//List<Task> assignedTask = user
-		
-		Task task = taskDao.getTaskbyId(id);
+		List<Task> adminTasks = taskDao.getAdminTasks(user); 
+		//List<Task> assignedTask = user
+		request.setAttribute("tasks", adminTasks);
+		request.setAttribute("role", user.getRole());
+		request.setAttribute("allUsers", allUsers);
 		request.setAttribute("allUsersEmails", allUsersEmails);
 		request.setAttribute("callingScreen", "Create");
-		request.setAttribute("task", task);
-        return "editTask";
+		request.setAttribute("task", new Task());
+        return "adminDashboard";
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "adminDashboard";
     }
 
 	
