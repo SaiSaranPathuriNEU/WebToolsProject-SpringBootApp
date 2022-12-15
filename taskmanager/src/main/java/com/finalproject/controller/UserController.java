@@ -114,9 +114,7 @@ public class UserController {
 				}
 				else {
                     System.out.println("Inside user");
-					
-					s
-					
+	
 					return "userDashboard";
 				}
 			}else {
