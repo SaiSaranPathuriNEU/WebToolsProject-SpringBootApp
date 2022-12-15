@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.hibernate.query.Query;
 import com.finalproject.pojo.User;
 
@@ -83,6 +84,21 @@ public class userDAO extends DAO {
 		return null;
    }
    
+  
+  public boolean deleteUser(User user) {
+ 	 try {
+          //save user object in the database
+      	begin();
+      	getSession().delete(user);
+      	commit();
+      	 return true;
+      	
+      } catch (HibernateException e) {
+          rollback();
+         return false;
+      }
+ }
+	 
    
    public List<String> getAllUsersEmails() {
 	   String role = "Admin";

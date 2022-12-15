@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -121,7 +122,7 @@ public class UserController {
 				}
 			}else {
 				System.out.println("not logged");
-				request.setAttribute("getAlert", "yes");
+				request.setAttribute("isError", "yes");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -129,12 +130,28 @@ public class UserController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/deleteUser/", method = RequestMethod.GET)
+	   public String deleteUser(@RequestParam User user) {
+	       
+		  try { boolean userDeleted = userDao.deleteUser(user);
+	       // service.deleteTodo(id);
+		   if(userDeleted)
+	       return "userDashboard";
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+		return null;
+	   }
+	
 
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request) throws IllegalStateException{
+		
 		HttpSession session = request.getSession(false);
 		session.removeAttribute("currentUser");
+		session.invalidate();
+		
 		return "login";
 		
 	}

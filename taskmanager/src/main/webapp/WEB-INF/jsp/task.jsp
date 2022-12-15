@@ -23,6 +23,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
   </head>
   <body>
+    <form class="task-from" action="createTask" modelAttribute="task" method="POST">
     <section class="vh-100" style="background-color: #eee">
       <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -32,7 +33,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 <div class="row justify-content-center">
                   <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                      Task
+                      <c:out value="${requestScope.callingScreen}"/> Task
                     </p>
 
                     <form class="mx-1 mx-md-4">
@@ -44,6 +45,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             id="description"
                             class="form-control"
                             name="description"
+                            required
                           />
                           <label class="form-label" for="form3Example1c"
                            ><strong>Task Description</label>
@@ -61,6 +63,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             class="form-control"
                             name="createdBy"
                             value="${sessionScope.currentUser.getEmail()}"
+                            required
                           />
                           <label class="form-label" for="form3Example1c"
                            >Created By</label>
@@ -75,7 +78,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
                             <div class="form-group">
                                 <select class="loginlb1 form-control term overflow-scroll" name="assignedTo" id="assignedTo" required>
-                                     <c:forEach var="userEmails" items="${requestScope.allUsersEmails}">
+                                <c:forEach var="userEmails" items="${requestScope.allUsersEmails}">
                                 <option class="overflow-scroll"><c:out value="${userEmails}"/></option>
                                 </c:forEach>
                                 </select>
@@ -90,9 +93,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         <div class="form-outline flex-fill mb-0">
                           <input
                             type="text"
+                            class = "date"
                             id="targetDate"
-                            class="date form-control"
                             name="targetDate"
+                            
                           />
                           <label class="form-label" for="form3Example4c"
                             >Deadline</label
@@ -104,12 +108,12 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div class="form-outline flex-fill mb-0">
                          
-                                <select class="loginlb1 form-control term overflow-scroll" name="role" id="role" required>
+                                <select class="loginlb1 form-control term overflow-scroll" name="status" id="status" required>
                                      
-                                <option class="overflow-scroll">New Task</option>
-                                <option class="overflow-scroll">Working</option>
-                                <option class="overflow-scroll">Completed</option>
-                                </c:forEach>
+                                <option class="overflow-scroll" value = "New Task" >New Task</option>
+                                <option class="overflow-scroll" value ="Working">Working</option>
+                                <option class="overflow-scroll"value = "Completed">Completed</option>
+                               
                                 </select>
     
                           <label class="form-label" for="form3Example4cd"
@@ -130,9 +134,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       <div
                         class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                       >
-                        <button type="button" class="btn btn-primary btn-lg">
-                          Ok
+                      <c:set var ="callingScreen" value="${requestScope.callingScreen}" />
+                      <c:if test="${callingScreen == 'Create'}">
+                        <button type="submit" class="btn btn-primary btn-lg" >
+                         Create Task                   
                         </button>
+                      </c:if>
+                      <c:if test="${callingScreen == 'Edit'}">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                         Edit Task                   
+                        </button>
+                      </c:if>
                       </div>
                     </form>
                   </div>
@@ -147,12 +159,19 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           </div>
         </div>
       </div>
+      <c:if test="${requestScope.isError == 'yes'}">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+
+              <strong>Failed to add task!</strong>
+            </div>
+          </c:if>
     </section>
+  </form>
     <script src="webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>   
 <script type="text/javascript">  
     $('.date').datepicker({  
-       format: 'mm-dd-yyyy'  
+       format: 'mm/dd/yyyy'  
      });  
 </script>  
   </body>

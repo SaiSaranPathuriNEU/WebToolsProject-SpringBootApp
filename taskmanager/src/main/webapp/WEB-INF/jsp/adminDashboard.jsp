@@ -60,9 +60,9 @@ h4 {
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-link px-3 me-2" >
+        <a type="button" class="btn btn-link px-3 me-2" href="/taskmanager/logout" >
           Logout
-        </button>
+        </a>
         
       </div>
     </div>
@@ -92,6 +92,7 @@ h4 {
             
         </li>
       </ul>
+      </div>
       <form>
       <div class="tab-content">
           <div class="tab-pane fade show active " id="home">
@@ -112,18 +113,18 @@ h4 {
                     <table id="table1" class="table table-striped table-bordered" style="width:100%">
                       <thead>
                         <tr>
-                          <th scope="col">ID</th>
+                        
                           <th scope="col">Task Description</th>
                           <th scope="col">Created By</th>
                           <th scope="col">Deadline</th>
                           <th scope="col">Assigned To</th>
                           <th scope="col">Status</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         <c:forEach var="task" items="${requestScope.tasks}">
                         <tr>                        
-                          <th scope="row"><c:out value="${task.getId()}"/></th>
                           <td><c:out value="${task.getDescription()}"/></td>
                           <td><c:out value="${task.getCreatedBy()}"/></td>
                           <td><c:out value="${task.getTargetDate()}"/></td>
@@ -141,18 +142,16 @@ h4 {
                   </div>
                 </div>
               </div>
-          </div>
-          <div class="tab-pane fade show active " id="createTasks">
-            
-             <h4 class="mt-2 align-items-center"> </h4>
+        </div>
+        <div class="tab-pane fade" id="createTasks">
           <div class="card-title">
              <div class="card-body align-items-center">
           <h4 class="align-items-center">Create Task</h4>
           <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="/task" class="btn btn-primary align-center">Create</a>
+          <a href="/taskmanager/task" type="button" class="btn btn-primary align-center">Create</a>
           </div>
           </div>
-          </div>
+        </div>
         <div class="tab-pane fade" id="User">
           <h4 class="mt-2">All Users:</h4>
           <div class="container">
@@ -161,25 +160,23 @@ h4 {
                 <table id="table2" class="table table-striped table-bordered" style="width:100%">
                   <thead>
                     <tr>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Role</th>
-                  
+                      <th >First Name</th>
+                      <th >Last Name</th>
+                      <th >Email</th>
+                      <th >Role</th>
+                      <th>  </th>
                     </tr>
                   </thead>
                   <tbody>
                     <c:forEach var="arguser" items="${requestScope.allUsers}">
                     <tr>
                       
-                      <th scope="row"><c:out value="${arguser.getFirstname()}"/></th>
+                      <td><c:out value="${arguser.getFirstname()}"/></td>
                       <td><c:out value="${arguser.getLastname()}"/></td>
                       <td><c:out value="${arguser.getEmail()}"/></td>
                       <td><c:out value="${arguser.getRole()}"/></td>                  
                       <td>
-                        <a type="button" class="btn btn-success"><i class="far fa-eye"></i>View User</a>
-                        <a type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Edit</a>
-                      <a type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i>Delete</a>
+                      <a type="button" class="btn btn-danger" href="/taskmanager/deleteUser?user=${arguser}"><i class="far fa-trash-alt"></i>Delete User</a>
                       </td>
                     </tr>
                   </c:forEach>
@@ -189,10 +186,7 @@ h4 {
             </div>
           </div>
       </div>
-          <div class="tab-pane fade" id="logout">
-              <h4 class="mt-2">Messages tab content</h4>
-              <p>Donec vel placerat quam, ut euismod risus. Sed a mi suscipit, elementum sem a, hendrerit velit. Donec at erat magna. Sed dignissim orci nec eleifend egestas. Donec eget mi consequat massa vestibulum laoreet. Mauris et ultrices nulla, malesuada volutpat ante. Fusce ut orci lorem. Donec molestie libero in tempus imperdiet. Cum sociis natoque penatibus et magnis.</p>
-          </div>
+          
       </div>
     </form>
   </div>

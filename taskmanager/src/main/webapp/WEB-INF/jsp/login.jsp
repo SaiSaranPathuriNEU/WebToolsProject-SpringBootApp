@@ -72,7 +72,7 @@ height: 100%;
             <c:if test="${user == null}">
               <p>Don't have an account? <a href="register" >Register here</a></p>
             </c:if>
-            <c:if test="${requestScope.getAlert == 'yes'}">
+            <c:if test="${requestScope.isError == 'yes'}">
             <div class="alert alert-warning alert-dismissible" role="alert">
 
               <strong>Login Failed!</strong>
