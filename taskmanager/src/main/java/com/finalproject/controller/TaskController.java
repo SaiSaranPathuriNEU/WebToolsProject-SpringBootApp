@@ -41,14 +41,6 @@ public class TaskController {
 	taskValidation taskValidate;
 	
  
-	@InitBinder
-    public void initBinder(WebDataBinder binder) {
-        
-		//Setting dataformat for the taskCreation
-        SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-    }
-	
 	@RequestMapping(value = "/task", method = RequestMethod.GET)
     public String showCreateTaskPage(ModelMap model,HttpServletRequest request) {
 		List<String> allUsersEmails = new ArrayList<String>();
@@ -58,7 +50,7 @@ public class TaskController {
 		for(User user : allUsers) {
 			allUsersEmails.add(user.getEmail());
 		}
-		//List<Task> assignedTask = user
+	
 		request.setAttribute("allUsersEmails", allUsersEmails);
 		request.setAttribute("callingScreen", "Create");
         model.addAttribute("task", new Task());
@@ -80,6 +72,7 @@ public class TaskController {
 		request.setAttribute("allUsersEmails", allUsersEmails);
 		request.setAttribute("callingScreen", "Create");
 		request.setAttribute("task", task);
+		request.setAttribute("callingTab", "tasks");
         return "editTask";
     }
 	
@@ -149,7 +142,7 @@ public class TaskController {
         }
 		
 		//List<Task> assignedTask = user 
-		//List<Task> assignedTask = user
+		
 		List<Task> userTasks = taskDao.getUserTasks(user);
 		
 		request.setAttribute("tasks", userTasks);

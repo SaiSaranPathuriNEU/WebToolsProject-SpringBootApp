@@ -160,19 +160,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                           </button>
                         </div>
                       </form>
-                      <c:if test="${requestScope.getAlert == 'yes'}">
-                        <!-- Error Alert -->
+                      <c:if test="${requestScope.isErrorinReg == 'Yes'}">
                         <div
-                          class="alert alert-danger alert-dismissible d-flex align-items-center fade show"
+                          class="alert alert-warning alert-dismissible"
+                          role="alert"
                         >
-                          <i class="bi-exclamation-octagon-fill"></i>
-                          <strong class="mx-2">Error!</strong> A problem has
-                          been occurred while submitting your data.
-                          <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="alert"
-                          ></button>
+                          <strong
+                            >Registration Failed! Please try again.</strong
+                          >
                         </div>
                       </c:if>
                     </div>

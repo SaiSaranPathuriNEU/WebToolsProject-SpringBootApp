@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.stereotype.Controller;
@@ -68,12 +70,17 @@ public class UserController {
 		//Validation the user details
 		userValidations.validate(regUser,result);
 		if(result.hasErrors()) {
+//			result.getFieldError(null)
+//			request.setAttribute("umailExists", true)
+			System.out.println("Error in registration"); 
+			request.setAttribute("isErrorinReg", "Yes");
 			return "register";
 		}
 		
 		try {
 			User u = userDao.registerUser(regUser);
 			if(u != null) {
+				request.setAttribute("isErrorinReg", "No");
 				return "login";
 			}
 		} catch (Exception e) {
@@ -114,7 +121,12 @@ public class UserController {
 				}
 				else {
                     System.out.println("Inside user");
-	
+					
+					List<Task> userTasks = taskDao.getUserTasks(user);
+					
+					request.setAttribute("tasks", userTasks);
+					request.setAttribute("role", user.getRole());
+					request.setAttribute("isError", "No");
 					return "userDashboard";
 				}
 			}else {
@@ -140,7 +152,7 @@ public class UserController {
 				  taskDao.removeAssignedTofromTask(task.getId());
 			  }
 			  
-			  userDao.deleteUser(user);
+			  boolean userDeleted = userDao.deleteUser(user);
 	       // service.deleteTodo(id);
 			//return "user-view";
 			  HttpSession session = request.getSession();

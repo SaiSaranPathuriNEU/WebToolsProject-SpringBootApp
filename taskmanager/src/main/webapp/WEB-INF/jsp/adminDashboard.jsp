@@ -18,6 +18,14 @@
       });
   });
   </script>
+  <c:if test="${requestScope.callingTab != null}">
+  <c:set var ="callingTab" value="${requestScope.callingTab}"/>
+      <script>
+    $(document).ready(function(){  
+    $("#${callingTab}").tab("show");
+     });
+       </script>
+    </c:if>
   <style>
     .container {
   padding: 2rem 0rem;
@@ -34,6 +42,7 @@ h4 {
     <c:if test="${user == null}">
       <c:redirect url = "/logout"/>
     </c:if>
+    
 
     <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -81,13 +90,13 @@ h4 {
               <a href="#home" class="nav-link active">Home</a>
           </li>
           <li class="nav-item">
-              <a href="#tasks" class="nav-link">Tasks</a>
+              <a href="#tasks" class="nav-link" id="Tasks">Tasks</a>
           </li>
           <li class="nav-item">
-              <a href="#createTasks" class="nav-link">Create Tasks</a>
+              <a href="#createTasks" class="nav-link" id="Create Tasks">Create Tasks</a>
           </li>
           <li class="nav-item">
-            <a href="#User" class="nav-link">View Users</a>
+            <a href="#User" class="nav-link" id="View User">View Users</a>
          </li>
          <li class="nav-item">
           <a href="#logout" class="nav-link">Logout</a>

@@ -30,19 +30,17 @@ public class userValidation implements Validator{
 		String userEmail = user.getEmail();
 		userDAO userdao = new userDAO();
 		
-		try {
-			System.out.println("The Uname inside try is  : " +user.getEmail());
-			User u = userdao.getUserbyEmail(userEmail);
-			if (u != null){
-				errors.rejectValue("userEmail", "errors.email", "email address already exists");
+		
+		System.out.println("The Uname inside try is  : " +user.getEmail());
+		User u = userdao.getUserbyEmail(userEmail);
+		if (u != null){
+				errors.reject("emailExists", "email address already exists");
+				System.out.println("email address already exists : message from userValidtation");
+				errors.addAllErrors(errors);
+				//errors.addAllErrors(errors);
 			}
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("Exception: " + e.getMessage());
-			
-			
-		}
+		
 		
 	}
 

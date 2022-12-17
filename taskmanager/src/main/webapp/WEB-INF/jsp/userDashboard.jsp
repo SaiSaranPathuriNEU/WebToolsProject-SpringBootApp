@@ -136,7 +136,7 @@ h4 {
                             </c:if>
                             <c:if test="${task.getStatus() == 'Working'}">
                             <a type="button" class="btn btn-success" href="/taskmanager/changeTaskStatus/${task.getId()}"><i class="fas fa-edit"></i>Completed</a>
-                            <a type="button" class="btn btn-warning" href="/taskmanager/dropUserTask/${tassssk.getId()}"><i class="fas fa-edit"></i>Drop</a>
+                            <a type="button" class="btn btn-warning" href="/taskmanager/dropUserTask/${task.getId()}"><i class="fas fa-edit"></i>Drop</a>
                             </c:if>
                             <c:if test="${task.getStatus() == 'Completed'}">
                             <a type="button" class="btn btn-danger" href="/taskmanager/deleteTask/${task.getId()}"><i class="fas fa-edit"></i>Remove</a>
